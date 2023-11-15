@@ -71,9 +71,6 @@ class MyRobot(MagicRobot):
 
     def autonomousInit(self):
         self.drive.flush()
-
-    def autonomous(self):
-        super().autonomous()
     
     def teleopInit(self):
         self.drive.flush()
