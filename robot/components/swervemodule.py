@@ -41,6 +41,45 @@ class SwerveModule:
             self.pid_controller.reset
         
         @staticmethod
-        def
+        def voltage_to_degrees(voltage):
+            deg = (voltage / 5) * 360
+
+            if deg < 0:
+                deg += 360
+            
+            return deg
+        
+        @staticmethod
+        def degree_to_voltage(degree):
+            return (degree / 360) * 5
+        
+        def set_deg(self, value):
+            self.requested_voltage = ((self.degree_to_voltage(value) + self.encoder_zero) % 5)
+
+        def move(self, speed, deg):
+            deg %= 360
+
+            if self.allow_reverse:
+
+                if abs(deg - self.voltage_to_degree(self.get_voltage())) > 90:
+                    speed *= -1
+                    deg += 180
+                    deg %= 360
+                
+            self.requested_speed = speed
+            self.set_deg(deg)
+        
+        def execute(self):
+            error = self.pid_controller.calculate(self.encoder.getVoltage(), self.requested_voltage)
+
+            output = 0
+
+            if not self.pid_controller.atSetpoint():
+                output = max(min(error,1), -1)
+
+            self.rotateMotor.set(output)
+            self.driveMotor.set(self.requested_speed)
+            
+
         
         
