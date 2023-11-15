@@ -11,7 +11,7 @@ from components import swervedrive, swervemodule
 
 from collections import namedtuple
 
-ModuleConfig - swervemodule.ModuleConfig
+ModuleConfig = swervemodule.ModuleConfig
 
 # Download and install stuff on the RoboRIO after imaging
 '''
