@@ -4,18 +4,18 @@ import math
 
 class SwerveDrive:
     # These modules will be injected from robot.py
-    FrontRightModule: swervemodule.SwerveModule
-    FrontLeftModule: swervemodule.SwerveModule
-    RearRightModule: swervemodule.SwerveModule
-    RearLeftModule: swervemodule.SwerveModule
+    frontRightModule: swervemodule.SwerveModule
+    frontLeftModule: swervemodule.SwerveModule
+    rearRightModule: swervemodule.SwerveModule
+    rearLeftModule: swervemodule.SwerveModule
 
     def setup(self):
 
         self.modules = {
-            "front_right": self.FrontRightModule,
-            "front_left": self.FrontLeftModule,
-            "rear_right": self.RearRightModule,
-            "rear_left": self.RearLeftModule
+            "front_right": self.frontRightModule,
+            "front_left": self.frontLeftModule,
+            "rear_right": self.rearRightModule,
+            "rear_left": self.rearLeftModule
         }
 
         self.requested_angles = {
