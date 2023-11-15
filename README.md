@@ -1,5 +1,5 @@
 # 2023-Bot-Diogenes
-This repository contains the source code for Team 5045's 2023 season robot.
+This repository contains the source code for Team 5045's 2023 swerve robot.
 
 # License
 The MIT License (MIT)
