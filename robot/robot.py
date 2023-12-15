@@ -40,48 +40,53 @@ class MyRobot(MagicRobot):
 
     drive: swervedrive.SwerveDrive
 
+    frontLeftModule: swervemodule.SwerveModule
+    frontRightModule: swervemodule.SwerveModule
+    rearLeftModule: swervemodule.SwerveModule
+    rearRightModule: swervemodule.SwerveModule
 
-    frontLeftModule_cfg = ModuleConfig(sd_prefix='FrontLeft_Module', zero=2.97, inverted=True, allow_reverse=True)
-    frontRightModule_cfg = ModuleConfig(sd_prefix='FrontRight_Module', zero=2.69, inverted=False, allow_reverse=True)
-    rearLeftModule_cfg = ModuleConfig(sd_prefix='RearLeft_Module', zero=0.18, inverted=True, allow_reverse=True)
-    rearRightModule_cfg = ModuleConfig(sd_prefix='RearRight_Module', zero=4.76, inverted=False, allow_reverse=True)
+    frontLeftModule_cfg = ModuleConfig(sd_prefix = 'FrontLeft_Module', reset = 0, allow_reverse=True)
+    frontRightModule_cfg = ModuleConfig(sd_prefix = 'FrontRight_Module', reset = -527.0, allow_reverse=True)
+    rearLeftModule_cfg = ModuleConfig(sd_prefix = 'RearLeft_Module', reset = 0, allow_reverse=True)
+    rearRightModule_cfg = ModuleConfig(sd_prefix = 'RearRight_Module', reset = 0, allow_reverse=True)
+
 
     def createObjects(self):
-        
-        self.frontLeftModule = swervemodule.SwerveModule()
-        self.frontRightModule = swervemodule.SwerveModule()
-        self.rearLeftModule = swervemodule.SwerveModule()
-        self.rearRightModule = swervemodule.SwerveModule()
-
         self.controller = wpilib.XboxController(0)
 
-        self.frontLeftModule_driveMotor = ctre.WPI_TalonSRX(6)
-        self.frontRightModule_driveMotor = ctre.WPI_TalonSRX(8)
-        self.rearLeftModule_driveMotor = ctre.WPI_TalonSRX(3)
-        self.rearRightModule_driveMotor = ctre.WPI_TalonSRX(1)
+        self.frontLeftModule_drive_motor = ctre.WPI_TalonSRX(6)
+        self.frontRightModule_drive_motor = ctre.WPI_TalonSRX(8)
+        self.rearLeftModule_drive_motor = ctre.WPI_TalonSRX(3)
+        self.rearRightModule_drive_motor = ctre.WPI_TalonSRX(1)
 
-        self.frontLeftModule_rotateMotor = ctre.WPI_TalonSRX(5)
-        self.frontRightModule_rotateMotor = ctre.WPI_TalonSRX(7)
-        self.rearLeftModule_rotateMotor = ctre.WPI_TalonSRX(4)
-        self.rearRightModule_rotateMotor = ctre.WPI_TalonSRX(2)
+        self.frontLeftModule_turn_motor = ctre.WPI_TalonSRX(5)
+        self.frontRightModule_turn_motor = ctre.WPI_TalonSRX(7)
+        self.rearLeftModule_turn_motor = ctre.WPI_TalonSRX(4)
+        self.rearRightModule_turn_motor = ctre.WPI_TalonSRX(2)
 
-        self.frontLeftModule_encoder = 
-        self.frontRightModule_encoder = 
-        self.rearLeftModule_encoder = 
-        self.rearRightModule_encoder = 
+        self.frontLeftModule_encoder = self.frontLeftModule_turn_motor
+        self.frontRightModule_encoder = self.frontRightModule_turn_motor
+        self.rearLeftModule_encoder = self.rearLeftModule_turn_motor
+        self.rearRightModule_encoder = self.rearRightModule_turn_motor
 
     def autonomousInit(self):
         self.drive.flush()
     
     def teleopInit(self):
         self.drive.flush()
+        self.drive.squared_inputs = True
     
     def move(self, x, y, rcw):
         self.drive.move(x, y, rcw)
 
     def teleopPeriodic(self):
-        self.move(self.controller.getLeftY, self.controller.getLeftX, self.controller.getRightX)
+        self.move(self.controller.getLeftY(), self.controller.getLeftX(), self.controller.getRightX())
 
+        print(self.frontLeftModule_encoder.getSelectedSensorPosition())
+        print(self.frontRightModule_encoder.getSelectedSensorPosition())
+        print(self.rearLeftModule_encoder.getSelectedSensorPosition())
+        print(self.rearRightModule_encoder.getSelectedSensorPosition())
+        print('_________________________________________________________________')
 
 
 if __name__ == "__main__":
