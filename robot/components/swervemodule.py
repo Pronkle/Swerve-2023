@@ -24,7 +24,9 @@ class SwerveModule:
         self.requested_ticks = 0
         self.requested_speed = 0
 
-        self.pid_controller = PIDController(1.0, 0.0, 0.0)
+        self.pid_controller = PIDController(0.00001, 0.0001, 0.0001, 0.02) #NOTE: TEST VALUES ONLY <NONFINAL>
+        # PIDController(Kp, Ki, Kd, period: default (0.02))
+        # Kp, Ki, and Kd set to varying 1e-5 -> 1e-4
         self.pid_controller.enableContinuousInput(0.0, 4096)
         self.pid_controller.setTolerance(0.5, 0.5)
 
