@@ -11,6 +11,8 @@ class SwerveDrive:
 
     xy_multiplier = 1.0
     rotation_multiplier = 1.0
+    # NOTE:For the next person working on the code, verify that this is a test value, since 1.0
+    # is a useless multiplier 
 
     def setup(self):
         self.modules = {

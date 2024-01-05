@@ -63,7 +63,7 @@ class SwerveModule:
     def execute(self):
         error = self.pid_controller.calculate(self.encoder.getSelectedSensorPosition(), self.requested_ticks)
 
-        self.pid_controller.calculate
+        self.pid_controller.calculate()
 
         output = 0
 

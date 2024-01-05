@@ -53,17 +53,19 @@ class MyRobot(MagicRobot):
 
     def createObjects(self):
         self.controller = wpilib.XboxController(0)
-
+        '''Drive Motors'''
         self.frontLeftModule_drive_motor = ctre.WPI_TalonSRX(6)
         self.frontRightModule_drive_motor = ctre.WPI_TalonSRX(8)
         self.rearLeftModule_drive_motor = ctre.WPI_TalonSRX(3)
         self.rearRightModule_drive_motor = ctre.WPI_TalonSRX(1)
 
+        '''Rotation Motors'''
         self.frontLeftModule_turn_motor = ctre.WPI_TalonSRX(5)
         self.frontRightModule_turn_motor = ctre.WPI_TalonSRX(7)
         self.rearLeftModule_turn_motor = ctre.WPI_TalonSRX(4)
         self.rearRightModule_turn_motor = ctre.WPI_TalonSRX(2)
 
+        '''Encoders'''
         self.frontLeftModule_encoder = self.frontLeftModule_turn_motor
         self.frontRightModule_encoder = self.frontRightModule_turn_motor
         self.rearLeftModule_encoder = self.rearLeftModule_turn_motor
@@ -82,11 +84,9 @@ class MyRobot(MagicRobot):
     def teleopPeriodic(self):
         self.move(self.controller.getLeftY(), self.controller.getLeftX(), self.controller.getRightX())
 
-        print(self.frontLeftModule_encoder.getSelectedSensorPosition())
-        print(self.frontRightModule_encoder.getSelectedSensorPosition())
-        print(self.rearLeftModule_encoder.getSelectedSensorPosition())
-        print(self.rearRightModule_encoder.getSelectedSensorPosition())
-        print('_________________________________________________________________')
+        # for testing //
+        print("FL: " + self.frontLeftModule_encoder + " FR: " + self.frontRightModule_encoder
+                + " RL: " + self.rearLeftModule_encoder + " RR: " + self.rearRightModule_encoder)
 
 
 if __name__ == "__main__":
