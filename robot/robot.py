@@ -45,8 +45,8 @@ class MyRobot(MagicRobot):
     rearLeftModule: swervemodule.SwerveModule
     rearRightModule: swervemodule.SwerveModule
 
-    frontLeftModule_cfg = ModuleConfig(sd_prefix = 'FrontLeft_Module', reset = 0, allow_reverse=True)
-    frontRightModule_cfg = ModuleConfig(sd_prefix = 'FrontRight_Module', reset = -527.0, allow_reverse=True)
+    frontLeftModule_cfg = ModuleConfig(sd_prefix = 'FrontLeft_Module', reset = -94.0, allow_reverse=True)
+    frontRightModule_cfg = ModuleConfig(sd_prefix = 'FrontRight_Module', reset = 0, allow_reverse=True)
     rearLeftModule_cfg = ModuleConfig(sd_prefix = 'RearLeft_Module', reset = 0, allow_reverse=True)
     rearRightModule_cfg = ModuleConfig(sd_prefix = 'RearRight_Module', reset = 0, allow_reverse=True)
 
@@ -54,16 +54,17 @@ class MyRobot(MagicRobot):
     def createObjects(self):
         self.controller = wpilib.XboxController(0)
         '''Drive Motors'''
-        self.frontLeftModule_drive_motor = ctre.WPI_TalonSRX(6)
-        self.frontRightModule_drive_motor = ctre.WPI_TalonSRX(8)
-        self.rearLeftModule_drive_motor = ctre.WPI_TalonSRX(3)
-        self.rearRightModule_drive_motor = ctre.WPI_TalonSRX(1)
+        self.frontLeftModule_drive_motor = ctre.WPI_TalonSRX(1)
+        self.frontRightModule_drive_motor = ctre.WPI_TalonSRX(3)
+        self.rearRightModule_drive_motor = ctre.WPI_TalonSRX(5)
+        self.rearLeftModule_drive_motor = ctre.WPI_TalonSRX(7)
+        
 
         '''Rotation Motors'''
-        self.frontLeftModule_turn_motor = ctre.WPI_TalonSRX(5)
-        self.frontRightModule_turn_motor = ctre.WPI_TalonSRX(7)
-        self.rearLeftModule_turn_motor = ctre.WPI_TalonSRX(4)
-        self.rearRightModule_turn_motor = ctre.WPI_TalonSRX(2)
+        self.frontLeftModule_turn_motor = ctre.WPI_TalonSRX(2)
+        self.frontRightModule_turn_motor = ctre.WPI_TalonSRX(4)
+        self.rearRightModule_turn_motor = ctre.WPI_TalonSRX(6)
+        self.rearLeftModule_turn_motor = ctre.WPI_TalonSRX(8)
 
         '''Encoders'''
         self.frontLeftModule_encoder = self.frontLeftModule_turn_motor
@@ -83,11 +84,16 @@ class MyRobot(MagicRobot):
 
     def teleopPeriodic(self):
         self.move(self.controller.getLeftY(), self.controller.getLeftX(), self.controller.getRightX())
-
         # for testing //
-        print("FL: " + self.frontLeftModule_encoder + " FR: " + self.frontRightModule_encoder
-                + " RL: " + self.rearLeftModule_encoder + " RR: " + self.rearRightModule_encoder)
+        print(self.frontLeftModule_encoder.getSelectedSensorPosition())
+        print(self.frontRightModule_encoder.getSelectedSensorPosition())
+        print(self.rearLeftModule_encoder.getSelectedSensorPosition())
+        print(self.rearRightModule_encoder.getSelectedSensorPosition())
+        print('_________________________________________________________________')
 
 
 if __name__ == "__main__":
     wpilib.run(MyRobot)
+
+
+

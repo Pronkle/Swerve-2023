@@ -24,11 +24,11 @@ class SwerveModule:
         self.requested_ticks = 0
         self.requested_speed = 0
 
-        self.pid_controller = PIDController(0.00001, 0.0001, 0.0001, 0.02) #NOTE: TEST VALUES ONLY <NONFINAL>
+        self.pid_controller = PIDController(0.000083, 0, 0) #NOTE: TEST VALUES ONLY <NONFINAL>
         # PIDController(Kp, Ki, Kd, period: default (0.02))
         # Kp, Ki, and Kd set to varying 1e-5 -> 1e-4
         self.pid_controller.enableContinuousInput(0.0, 4096)
-        self.pid_controller.setTolerance(0.5, 0.5)
+        self.pid_controller.setTolerance(0.8, 0.8)
 
     def flush(self):
         self.requested_ticks = self.reset
@@ -37,11 +37,11 @@ class SwerveModule:
     
     @staticmethod
     def ticks_to_deg(ticks):
-        return(ticks / 4096)
+        return(ticks / 4096) * 360
     
     @staticmethod
     def deg_to_ticks(deg):
-        return(deg * 4096)
+        return((deg/360) * 4096) 
     
     def get_deg(self):
         return(self.encoder.getSelectedSensorPosition() - self.reset)
@@ -61,14 +61,15 @@ class SwerveModule:
         self.set_deg(deg)
     
     def execute(self):
-        error = self.pid_controller.calculate(self.encoder.getSelectedSensorPosition(), self.requested_ticks)
+        # error = self.pid_controller.calculate(self.encoder.getSelectedSensorPosition(), self.requested_ticks)
 
-        self.pid_controller.calculate()
-
-        output = 0
+        # output = 0
 
         if not self.pid_controller.atSetpoint():
-            output = max(min(error, 1), -1)
+            # output = max(min(error, 1), -1) 
+            output = self.pid_controller.calculate(self.encoder.getSelectedSensorPosition(), self.requested_ticks)
+        elif self.pid_controller.atSetpoint():
+            output = 0
         
         self.turn_motor.set(output)
         self.drive_motor.set(self.requested_speed)
